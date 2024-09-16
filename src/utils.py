@@ -31,3 +31,5 @@ def show(item, ax, title=None):
     ax.imshow(np.transpose(img.numpy(), (1, 2, 0)), interpolation='nearest')
     if title:
         ax.set_title(label=title)
+    else:
+        ax.set_title(label=f"{class_number_to_name[label]}")
