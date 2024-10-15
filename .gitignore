@@ -1,4 +1,6 @@
 /.*
 /src/.*
-/src/__*
-/.gitignore
+/src/__pycache__
+/utils/__pycache__
+/data/*.pth
+test.ipynb
