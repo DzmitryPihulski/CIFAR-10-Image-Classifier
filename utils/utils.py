@@ -1,6 +1,5 @@
 import random
 import torch
-import matplotlib.pyplot as plt
 import numpy as np
 
 def set_seed(seed_value):
@@ -27,7 +26,6 @@ class_number_to_name = {
         
 def show(item, ax, title=None):
     img, label = item
-#    img = img/255
     ax.imshow(np.transpose(img.numpy(), (1, 2, 0)), interpolation='nearest')
     if title:
         ax.set_title(label=title)
