@@ -7,7 +7,7 @@ from utils.models import ConvNet_1, ConvNet_2, ResNet18
 from utils.utils import set_seed
 import torch.optim as optim
 import torch.nn as nn
-import torchvision.transforms as transforms
+from utils.utils import transform_pipeline
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"Using device: {device}")
 
@@ -16,12 +16,7 @@ validation_set = CustomImageDataset()
 test_set = CustomImageDataset()
 
 
-transform_pipeline = transforms.Compose([
-    transforms.RandomCrop(32, padding=4),
-    transforms.RandomHorizontalFlip(),
-    transforms.ColorJitter(brightness=0.3, contrast=0.3, saturation=0.3),
-    transforms.RandomRotation(degrees=15),
-])
+
 
 train_set.load_batch('data/cifar-10-batches-py/data_batch_1')
 train_set.load_batch_transformed('data/cifar-10-batches-py/data_batch_1', transform_pipeline)
