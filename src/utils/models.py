@@ -2,6 +2,12 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class ConvNet_1(nn.Module):
+    """
+    A simple Convolutional Neural Network with two convolutional layers,
+    followed by three fully connected layers for classification. This model 
+    uses ReLU activations and max pooling after each convolution.
+    """
+
     def __init__(self):
         super(ConvNet_1, self).__init__()
         self.conv1 = nn.Conv2d(3, 6, 5)
@@ -21,6 +27,12 @@ class ConvNet_1(nn.Module):
         return x
     
 class ConvNet_2(nn.Module):
+    """
+    A deeper Convolutional Neural Network with batch normalization and dropout.
+    This model uses 3 convolutional layers with batch normalization followed by 
+    two fully connected layers and dropout for regularization.
+    """
+
     def __init__(self):
         super(ConvNet_2, self).__init__()
         self.conv1 = nn.Conv2d(3, 32, 3, padding=1)
@@ -44,7 +56,22 @@ class ConvNet_2(nn.Module):
         return x
     
 class ConvBlock(nn.Module):
+    """
+    A basic building block for a ResNet-like architecture. 
+    This block consists of two convolutional layers, each followed by batch 
+    normalization and ReLU activations. It also includes a skip connection
+    that adds the input to the output (residual connection).
+    """
+
     def __init__(self, in_channels, out_channels, downsample=False):
+        """
+        Initialize the ConvBlock.
+        Arguments:
+        - in_channels: Number of input channels
+        - out_channels: Number of output channels
+        - downsample: Boolean indicating whether to downsample the spatial dimensions
+        """
+        
         stride = 2 if downsample else 1
         super(ConvBlock, self).__init__()
         self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=stride, padding=1)
@@ -66,6 +93,12 @@ class ConvBlock(nn.Module):
         return out
     
 class ResNet18(nn.Module):
+    """
+    A ResNet-18 architecture with residual connections. 
+    It uses ConvBlock layers to build the network. Each ConvBlock includes
+    convolutional layers, batch normalization, and skip connections.
+    """
+
     def __init__(self):
         super(ResNet18, self).__init__()
         self.conv1 = nn.Conv2d(in_channels=3, out_channels=64, kernel_size=3, padding=1)

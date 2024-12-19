@@ -1,6 +1,6 @@
 /.*
 /src/.*
 /src/__pycache__
-/utils/__pycache__
+/src/utils/__pycache__
 /data/*.pth
 test.ipynb
