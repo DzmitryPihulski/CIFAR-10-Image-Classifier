@@ -5,7 +5,9 @@ import torch.optim as optim
 import numpy as np
 import matplotlib.pyplot as plt
 from utils.Dataset import CustomImageDataset
-from utils.models import ConvNet_1, ConvNet_2, ResNet18
+from utils.models.ConvNet_1_model import ConvNet_1
+from utils.models.ConvNet_2_model import ConvNet_2
+from utils.models.ResNet18_model import ResNet18
 from utils.utils import set_seed, transform_pipeline
 
 # Function to train a model
@@ -18,13 +20,12 @@ def train_model(model, model_name: str):
     """
 
     set_seed(42) # Set random seed for reproducibility
-    print("Training "+model_name)
+    print(f"Training {model_name}")
 
     # Initialize model, loss function, and optimizer
-    net = model()
-    net = net.to(device)
+    model = model.to(device)
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.AdamW(net.parameters())  # Set an initial learning rate
+    optimizer = optim.AdamW(model.parameters())  # Set an initial learning rate
 
     epochs = np.arange(1, 51)
     losses_train = list()
@@ -41,12 +42,12 @@ def train_model(model, model_name: str):
     for epoch in epochs:
         epoch_loss_train = 0
         running_loss = 0
-        net.train()  # Set model to training mode
+        model.train()  # Set model to training mode
         for i, data in enumerate(train_loader, 0):
             inputs, labels = data
             inputs, labels = inputs.to(device), labels.to(device)
             optimizer.zero_grad()
-            outputs = net(inputs)
+            outputs = model(inputs)
             loss = criterion(outputs, labels)
             loss.backward()
             optimizer.step()
@@ -60,13 +61,13 @@ def train_model(model, model_name: str):
                 running_loss = 0
 
         # Validation phase
-        net.eval()  # Set model to evaluation mode
+        model.eval()  # Set model to evaluation mode
         epoch_loss_val = 0
         with torch.no_grad():
             for data in validation_loader:
                 images, labels = data
                 images, labels = images.to(device), labels.to(device)
-                outputs = net(images)
+                outputs = model(images)
                 loss = criterion(outputs, labels)
                 epoch_loss_val += loss.item()
 
@@ -82,11 +83,11 @@ def train_model(model, model_name: str):
             # Save best model
             torch.save({
                 'epoch': epoch,
-                'model_state_dict': net.state_dict(),
+                'model_state_dict': model.state_dict(),
                 'optimizer_state_dict': optimizer.state_dict(),
                 'train_loss': losses_train,
                 'val_loss': losses_val
-            }, 'src/data/'+model_name+'_best_performance.pth')
+            }, f'src/data/{model_name}_best_performance.pth')
         else:
             patience_counter += 1
         
@@ -98,11 +99,11 @@ def train_model(model, model_name: str):
     # Save final model
     torch.save({
         'epoch': epoch,
-        'model_state_dict': net.state_dict(),
+        'model_state_dict': model.state_dict(),
         'optimizer_state_dict': optimizer.state_dict(),
         'train_loss': losses_train,
         'val_loss': losses_val
-    }, 'src/data/'+model_name+'_full_training.pth')
+    }, f'src/data/{model_name}_full_training.pth')
 
     print('Finished Training')
 
@@ -120,7 +121,7 @@ def train_model(model, model_name: str):
     plt.xlabel("Epoch")
     plt.ylabel("CrossEntropyLoss")
     plt.legend(loc='upper left')
-    plt.savefig("src/data/"+model_name+".png")
+    plt.savefig(f"src/data/images/{model_name}.png")
 
     # Calculate test accuracy
     total_correct = 0
@@ -130,7 +131,7 @@ def train_model(model, model_name: str):
         images, labels = images.to(device), labels.to(device)
 
         # Forward pass
-        outputs = net(images)
+        outputs = model(images)
         _, predicted = torch.max(outputs, 1)
 
         # Update the running total of correct predictions and samples
@@ -178,5 +179,7 @@ test_loader = torch.utils.data.DataLoader(test_set, batch_size=32,
 
 print("Data loading finished!")
 
-# Train the model
+# Train models
+train_model(ConvNet_1, 'ConvNet_1')
+train_model(ConvNet_2, 'ConvNet_2')
 train_model(ResNet18, 'ResNet18')
