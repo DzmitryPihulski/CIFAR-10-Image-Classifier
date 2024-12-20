@@ -4,6 +4,15 @@ import numpy as np
 import torchvision.transforms as transforms
 
 def set_seed(seed_value):
+    """
+    Set the seed for reproducibility. This function ensures that the results
+    are consistent across different runs by setting the seed for the random number 
+    generators used by Python, NumPy, and PyTorch (including GPU if available).
+    
+    Arguments:
+    - seed_value: The integer value to set as the seed for all random number generators.
+    """
+
     random.seed(seed_value)
     torch.manual_seed(seed_value)
     if torch.cuda.is_available():
@@ -26,6 +35,16 @@ class_number_to_name = {
 }
         
 def show(item, ax, title=None):
+    """
+    Display an image on the given axis (`ax`) with an optional title. If no title is 
+    provided, the class label is used.
+
+    Arguments:
+    - item: Tuple of image tensor and label.
+    - ax: Matplotlib axis to display the image.
+    - title: Optional title; defaults to class label.
+    """
+
     img, label = item
     ax.imshow(np.transpose(img.numpy(), (1, 2, 0)), interpolation='nearest')
     if title:
