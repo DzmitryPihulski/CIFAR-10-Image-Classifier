@@ -17,8 +17,8 @@ The training dataset was augmented with [transform_pipeline](/utils/utils.py)
 
 Examples of transfromations are:
 
-<img src="data/transform_frog.png" width="700" />
-<img src="data/transform_truck.png" width="700" />
+<img src="src/data/images/transform_frog.png" width="700" />
+<img src="src/data/images/transform_truck.png" width="700" />
 
 <br>
 You can read about the project and it's results in:
