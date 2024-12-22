@@ -38,7 +38,7 @@ def train_model(
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.AdamW(model.parameters())  # Set an initial learning rate
 
-    epochs = np.arange(1, 51)
+    epochs = np.arange(1, 51)  # type: ignore
     losses_train: List[float] = list()
     losses_val: List[float] = list()
 
@@ -61,7 +61,7 @@ def train_model(
             outputs = model(inputs)
             loss = criterion(outputs, labels)
             loss.backward()
-            optimizer.step()
+            optimizer.step()  # type: ignore
 
             running_loss += loss.item()
             epoch_loss_train += loss.item()
@@ -130,10 +130,13 @@ def train_model(
     plt.figure(figsize=(10, 7))  # type: ignore
     marker_on = [losses_val.index(min(losses_val))]
     plt.plot(  # type: ignore
-        np.arange(1, len(losses_train) + 1), losses_train, color="r", label="Train loss"
+        np.arange(1, len(losses_train) + 1),  # type: ignore
+        losses_train,
+        color="r",
+        label="Train loss",  # type: ignore
     )
     plt.plot(  # type: ignore
-        np.arange(1, len(losses_val) + 1),
+        np.arange(1, len(losses_val) + 1),  # type: ignore
         losses_val,
         "-gD",
         label="Test loss",
