@@ -1,15 +1,17 @@
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
+
 
 class ConvNet_1(nn.Module):
     """
     A simple Convolutional Neural Network with two convolutional layers,
-    followed by three fully connected layers for classification. This model 
+    followed by three fully connected layers for classification. This model
     uses ReLU activations and max pooling after each convolution.
     """
 
     def __init__(self):
-        super(ConvNet_1, self).__init__()
+        super().__init__()  # type: ignore
         self.conv1 = nn.Conv2d(3, 6, 5)
         self.pool = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(6, 16, 5)
@@ -17,7 +19,7 @@ class ConvNet_1(nn.Module):
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, 10)
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor):
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
         x = x.view(-1, 16 * 5 * 5)

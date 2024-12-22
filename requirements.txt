@@ -1,6 +1,7 @@
 mypy==1.11.2
 mypy-extensions==1.0.0
 numpy==1.26.3
-torch @ https://download.pytorch.org/whl/cu121/torch-2.3.1%2Bcu121-cp311-cp311-win_amd64.whl#sha256=5a578516d0caf233993b3161d7dce1472bb917c59dd767c51921cd6696c3f3f7      
+torch @ https://download.pytorch.org/whl/cu121/torch-2.3.1%2Bcu121-cp311-cp311-win_amd64.whl#sha256=5a578516d0caf233993b3161d7dce1472bb917c59dd767c51921cd6696c3f3f7
 torchsummary==1.5.1
 torchvision==0.18.0
+pre-commit
