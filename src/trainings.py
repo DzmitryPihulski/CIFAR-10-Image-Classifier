@@ -8,6 +8,7 @@ from utils.Dataset import CustomImageDataset
 from utils.models.ConvNet_1_model import ConvNet_1
 from utils.models.ConvNet_2_model import ConvNet_2
 from utils.models.ResNet18_model import ResNet18
+from utils.models.VGG11_model import VGG11
 from utils.utils import set_seed, transform_pipeline
 
 # Function to train a model
@@ -172,14 +173,15 @@ train_loader = torch.utils.data.DataLoader(train_set, batch_size=32,
                                          shuffle=True, pin_memory=True)
 
 validation_loader = torch.utils.data.DataLoader(validation_set, batch_size=32,
-                                         shuffle=True, pin_memory=True)
+                                         shuffle=False, pin_memory=True)
 
 test_loader = torch.utils.data.DataLoader(test_set, batch_size=32,
-                                         shuffle=True, pin_memory=True)
+                                         shuffle=False, pin_memory=True)
 
 print("Data loading finished!")
 
 # Train models
-train_model(ConvNet_1, 'ConvNet_1')
-train_model(ConvNet_2, 'ConvNet_2')
-train_model(ResNet18, 'ResNet18')
+train_model(ConvNet_1(), 'ConvNet_1')
+train_model(ConvNet_2(), 'ConvNet_2')
+train_model(ResNet18(), 'ResNet18')
+train_model(VGG11(), 'VGG11')
