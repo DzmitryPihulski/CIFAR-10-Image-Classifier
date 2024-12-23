@@ -10,6 +10,7 @@ The models are:
 * Simple CNN model
 * More complex CNN model with drop-out
 * ResNet18
+* VGG11
 
 Models architecture was coded in [models file](/utils/models.py).
 
